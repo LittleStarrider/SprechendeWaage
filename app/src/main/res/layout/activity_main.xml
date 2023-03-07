@@ -55,7 +55,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="180dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="264dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/presence_invisible" />
@@ -69,5 +69,25 @@
         android:text="Starte Messung"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/gForce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginBottom="28dp"
+        android:text="0"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/degreeSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="°"
+        android:textSize="40sp"
+        app:layout_constraintStart_toEndOf="@+id/gForce"
+        app:layout_constraintTop_toTopOf="@+id/gForce" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
