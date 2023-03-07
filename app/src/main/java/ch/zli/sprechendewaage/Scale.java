@@ -8,11 +8,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.speech.tts.TextToSpeech;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -36,18 +39,22 @@ public class Scale extends Activity implements SensorEventListener {
 
     float lastXCircleValue = 0;
     float lastYCircleValue = 0;
-    float lastDegree = 0;
+    double lastDegree = 0;
     int degreeCounter = 0;
 
     public Sensor mySensor;
     private SensorManager mySensorManager;
 
-    public Scale(TextView xGradient, TextView zGradient, TextView degree, ImageView circle, AppCompatActivity context) {
+    TextToSpeech textToSpeech;
+
+
+    public Scale(TextView xGradient, TextView zGradient, TextView degree, ImageView circle, TextToSpeech textToSpeech, AppCompatActivity context) {
         this.xGradient = xGradient;
         this.zGradient = zGradient;
         this.degree = degree;
         this.context = context;
         this.circle = circle;
+        this.textToSpeech = textToSpeech;
 
         initiateSensor();
     }
@@ -63,12 +70,17 @@ public class Scale extends Activity implements SensorEventListener {
         updateXandZValues();
         if (isActive) {
             double angle = (Math.atan(y/z)) * 57.29;
-            float degreeValue = Math.round(angle*100)/100;
+            double degreeValue = Math.round(angle*100.0)/100.0;
             degree.setText(Double.toString(degreeValue));
 
             if (lastDegree > (degreeValue - 2) && lastDegree < degreeValue + 2) {
                 degreeCounter ++;
                 System.out.println(degreeCounter);
+
+                if (degreeCounter == 150) {
+                    textToSpeech.speak(degree.getText() + " Grad", TextToSpeech.QUEUE_FLUSH, null, null);
+                    degreeCounter = 0;
+                }
             } else {
                 degreeCounter = 0;
             }
