@@ -69,6 +69,8 @@ public class Scale extends Activity implements SensorEventListener {
     private void doIt() {
         updateXandZValues();
         if (isActive) {
+            handleCircle();
+
             double angle = (Math.atan(y/z)) * 57.29;
             double degreeValue = Math.round(angle*100.0)/100.0;
             degree.setText(Double.toString(degreeValue));
@@ -122,7 +124,6 @@ public class Scale extends Activity implements SensorEventListener {
             z = accelerometerValues[2];
 
             doIt();
-            handleCircle();
         }
     }
 
