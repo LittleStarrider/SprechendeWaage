@@ -76,6 +76,13 @@ public class Scale extends Activity implements SensorEventListener {
         }
     }
 
+    private void handleCircle() {
+        circle.setX(circle.getX() - ((x-lastXCircleValue)*60));
+        circle.setY(circle.getY() + ((y-lastYCircleValue)*60));
+        lastXCircleValue = x;
+        lastYCircleValue = y;
+    }
+
     public void pause() {
         isActive = false;
     }
@@ -103,6 +110,7 @@ public class Scale extends Activity implements SensorEventListener {
             z = accelerometerValues[2];
 
             doIt();
+            handleCircle();
         }
     }
 
